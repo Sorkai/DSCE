@@ -1,0 +1,23 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceFolder}/**",      // 工作区所有文件
+                "C:/APP/mingw64/include/"  // MinGW系统头文件路径
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "windowsSdkVersion": "10.0.22621.0",
+            "cStandard": "c17",              
+            "cppStandard": "c++17",
+            "intelliSenseMode": "windows-gcc-x64", // 明确指定Windows平台
+            "compilerPath": "C:/APP/mingw64/bin/gcc.exe",
+            "compilerArgs": ["-Wall"]        // 静态代码分析时启用警告
+        }
+    ],
+    "version": 4
+}
