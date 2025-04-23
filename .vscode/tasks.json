@@ -13,7 +13,7 @@
                 "${file}", // 仅编译当前文件
                 "-o",
                 "${fileDirname}/out/${fileBasenameNoExtension}.exe", //统一输出文件名和路径格式
-                "-finput-charset=GBK", // 强制输入字符集
+                "-finput-charset=UTF-8", // 强制输入字符集
                 "-fexec-charset=GBK" // 输出字符集统一为UTF-8
             ],
             "options": {

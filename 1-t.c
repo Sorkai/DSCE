@@ -14,7 +14,7 @@ int CreateList(SeqList *L, DataType a[], int n)
 {
     if (n > MaxSize)
     {
-        printf("Ë³Ğò±íµÄ¿Õ¼ä²»¹»,ÎŞ·¨½¨Á¢Ë³Ğò±í\n");
+        printf("é¡ºåºè¡¨çš„ç©ºé—´ä¸å¤Ÿ,æ— æ³•å»ºç«‹é¡ºåºè¡¨\n");
         return 0;
     }
     for (int i = 0; i < n; i++)
@@ -55,7 +55,7 @@ int Get(SeqList *L, int i, DataType *ptr)
 {
     if (i < 1 || i > L->length)
     {
-        printf("Î»ÖÃ´íÎó,»ñÈ¡Ê§°Ü\n");
+        printf("ä½ç½®é”™è¯¯,è·å–å¤±è´¥\n");
         return 0;
     }
     *ptr = L->data[i - 1];
@@ -66,12 +66,12 @@ int Insert(SeqList *L, int i, DataType x)
 {
     if (L->length >= MaxSize)
     {
-        printf("ÉÏÒç´íÎó,²åÈëÊ§°Ü\n");
+        printf("ä¸Šæº¢é”™è¯¯,æ’å…¥å¤±è´¥\n");
         return 0;
     }
     if (i < 1 || i > L->length + 1)
     {
-        printf("Î»ÖÃ´íÎó,²åÈëÊ§°Ü\n");
+        printf("ä½ç½®é”™è¯¯,æ’å…¥å¤±è´¥\n");
         return 0;
     }
     for (int j = L->length; j >= i; j--)
@@ -87,12 +87,12 @@ int Delete(SeqList *L, int i, DataType *ptr)
 {
     if (L->length == 0)
     {
-        printf("ÏÂÒç´íÎó,É¾³ıÊ§°Ü\n");
+        printf("ä¸‹æº¢é”™è¯¯,åˆ é™¤å¤±è´¥\n");
         return 0;
     }
     if (i < 1 || i > L->length)
     {
-        printf("Î»ÖÃ´íÎó,É¾³ıÊ§°Ü\n");
+        printf("ä½ç½®é”™è¯¯,åˆ é™¤å¤±è´¥\n");
         return 0;
     }
     *ptr = L->data[i - 1];
@@ -118,91 +118,91 @@ int main()
     }
     if (CreateList(&L, r, n))
     {
-        printf("Ë³Ğò±í´´½¨³É¹¦¡£\n");
-        printf("µ±Ç°ÏßĞÔ±íµÄÊı¾İÎª: ");
+        printf("é¡ºåºè¡¨åˆ›å»ºæˆåŠŸã€‚\n");
+        printf("å½“å‰çº¿æ€§è¡¨çš„æ•°æ®ä¸º: ");
         PrintList(&L);
 
         int choice;
         while (1)
         {
-            printf("\n++++++++ Ë³Ğò±íÊµÑé²Ëµ¥ ++++++++\n");
-            printf("1. ²åÈëÔªËØ\n");
-            printf("2. É¾³ıÔªËØ\n");
-            printf("3. °´Öµ²éÕÒÔªËØ\n");
-            printf("4. °´Î»Ğò²éÕÒÔªËØ\n");
-            printf("5. ´òÓ¡Ë³Ğò±í\n");
-            printf("6. »ñÈ¡Ë³Ğò±í³¤¶È\n");
-            printf("0. ÍË³ö\n");
-            printf("ÇëÑ¡Ôñ²Ù×÷(0-6): ");
+            printf("\n++++++++ é¡ºåºè¡¨å®éªŒèœå• ++++++++\n");
+            printf("1. æ’å…¥å…ƒç´ \n");
+            printf("2. åˆ é™¤å…ƒç´ \n");
+            printf("3. æŒ‰å€¼æŸ¥æ‰¾å…ƒç´ \n");
+            printf("4. æŒ‰ä½åºæŸ¥æ‰¾å…ƒç´ \n");
+            printf("5. æ‰“å°é¡ºåºè¡¨\n");
+            printf("6. è·å–é¡ºåºè¡¨é•¿åº¦\n");
+            printf("0. é€€å‡º\n");
+            printf("è¯·é€‰æ‹©æ“ä½œ(0-6): ");
             if (scanf("%d", &choice) != 1)
             {
                 while (getchar() != '\n')
                     ;
-                printf("ÊäÈëÎŞĞ§£¬ÇëÖØĞÂÑ¡Ôñ¡£\n");
+                printf("è¾“å…¥æ— æ•ˆï¼Œè¯·é‡æ–°é€‰æ‹©ã€‚\n");
                 continue;
             }
             switch (choice)
             {
             case 1:
-                printf("ÇëÊäÈëÒª²åÈëµÄÎ»ÖÃ(1~%d): ", L.length + 1);
+                printf("è¯·è¾“å…¥è¦æ’å…¥çš„ä½ç½®(1~%d): ", L.length + 1);
                 scanf("%d", &pos);
-                printf("ÇëÊäÈëÒª²åÈëµÄÔªËØ: ");
+                printf("è¯·è¾“å…¥è¦æ’å…¥çš„å…ƒç´ : ");
                 scanf("%d", &x);
                 if (Insert(&L, pos, x))
                 {
-                    printf("ÔÚµÚ %d ¸öÎ»ÖÃ²åÈë %d ºóÊı¾İÎª: ", pos, x);
+                    printf("åœ¨ç¬¬ %d ä¸ªä½ç½®æ’å…¥ %d åæ•°æ®ä¸º: ", pos, x);
                     PrintList(&L);
                 }
                 break;
             case 2:
-                printf("ÇëÊäÈëÒªÉ¾³ıµÄÔªËØĞòºÅ(1~%d): ", L.length);
+                printf("è¯·è¾“å…¥è¦åˆ é™¤çš„å…ƒç´ åºå·(1~%d): ", L.length);
                 scanf("%d", &pos);
                 if (Delete(&L, pos, &x) == 1)
                 {
-                    printf("É¾³ıµÚ %d ¸öÔªËØ %d ³É¹¦, É¾³ıºóÊı¾İÎª: ", pos, x);
+                    printf("åˆ é™¤ç¬¬ %d ä¸ªå…ƒç´  %d æˆåŠŸ, åˆ é™¤åæ•°æ®ä¸º: ", pos, x);
                     PrintList(&L);
                 }
                 break;
             case 3:
-                printf("ÇëÊäÈëÒª°´Öµ²éÕÒµÄÔªËØ: ");
+                printf("è¯·è¾“å…¥è¦æŒ‰å€¼æŸ¥æ‰¾çš„å…ƒç´ : ");
                 scanf("%d", &x);
                 i = Locate(&L, x);
                 if (i == 0)
                 {
-                    printf("²éÕÒÊ§°Ü, ÏßĞÔ±íÖĞÃ»ÓĞÔªËØ %d\n", x);
+                    printf("æŸ¥æ‰¾å¤±è´¥, çº¿æ€§è¡¨ä¸­æ²¡æœ‰å…ƒç´  %d\n", x);
                 }
                 else
                 {
-                    printf("ÔªËØ %d µÄÎ»ÖÃ(ĞòºÅ)Îª: %d\n", x, i);
+                    printf("å…ƒç´  %d çš„ä½ç½®(åºå·)ä¸º: %d\n", x, i);
                 }
                 break;
             case 4:
-                printf("ÇëÊäÈëÒª°´Î»Ğò²éÕÒµÄÔªËØĞòºÅ(1~%d): ", L.length);
+                printf("è¯·è¾“å…¥è¦æŒ‰ä½åºæŸ¥æ‰¾çš„å…ƒç´ åºå·(1~%d): ", L.length);
                 scanf("%d", &i);
                 if (Get(&L, i, &x) == 1)
                 {
-                    printf("µÚ %d ¸öÔªËØÖµÊÇ %d\n", i, x);
+                    printf("ç¬¬ %d ä¸ªå…ƒç´ å€¼æ˜¯ %d\n", i, x);
                 }
                 break;
             case 5:
-                printf("µ±Ç°ÏßĞÔ±íµÄÊı¾İÎª: ");
+                printf("å½“å‰çº¿æ€§è¡¨çš„æ•°æ®ä¸º: ");
                 PrintList(&L);
                 break;
             case 6:
-                printf("µ±Ç°ÏßĞÔ±íµÄ³¤¶ÈÎª: %d\n", Length(&L));
+                printf("å½“å‰çº¿æ€§è¡¨çš„é•¿åº¦ä¸º: %d\n", Length(&L));
                 break;
             case 0:
-                printf("³ÌĞòÍÆ³ö¡£\n");
+                printf("ç¨‹åºæ¨å‡ºã€‚\n");
                 return 0;
             default:
-                printf("ÎŞĞ§µÄÑ¡Ôñ£¬ÇëÖØĞÂÊäÈë¡£\n");
+                printf("æ— æ•ˆçš„é€‰æ‹©ï¼Œè¯·é‡æ–°è¾“å…¥ã€‚\n");
                 break;
             }
         }
     }
     else
     {
-        printf("Ë³Ğò±í´´½¨Ê§°Ü¡£\n");
+        printf("é¡ºåºè¡¨åˆ›å»ºå¤±è´¥ã€‚\n");
     }
     return 0;
 }
