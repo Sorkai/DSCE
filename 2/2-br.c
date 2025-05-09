@@ -1,187 +1,79 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef char DataType;
-
-typedef struct Node
+// 链栈结点定义
+typedef struct StackNode
 {
-    DataType data;
-    struct Node *next;
-} Node;
+    int data;
+    struct StackNode *next;
+} StackNode, *LinkStack;
 
-void InitStack(Node **top)
+// 初始化空栈
+void InitStack(LinkStack *top)
 {
     *top = NULL;
 }
 
-void Push(Node **top, DataType x)
+// 入栈
+void Push(LinkStack *top, int x)
 {
-    Node *s = (Node *)malloc(sizeof(Node));
-    if (s == NULL)
-    {
-        printf("内存分配失败，无法入栈\n");
-        return;
-    }
-    s->data = x;
-    s->next = *top;
-    *top = s;
+    StackNode *p = (StackNode *)malloc(sizeof(StackNode));
+    p->data = x;
+    p->next = *top;
+    *top = p;
 }
 
-int Pop(Node **top, DataType *ptr_x)
+// 出栈
+int Pop(LinkStack *top, int *x)
 {
-    Node *p;
     if (*top == NULL)
-    {
-        printf("栈空警告：出栈失败 (Stack Underflow)\n");
-        return 0;
-    }
-    p = *top;
-    *ptr_x = p->data;
-    *top = (*top)->next;
+        return 0; // 空栈
+    StackNode *p = *top;
+    *x = p->data;
+    *top = p->next;
     free(p);
     return 1;
 }
 
-int GetTop(Node *top, DataType *ptr_x)
+// 取栈顶元素
+int GetTop(LinkStack top, int *x)
 {
     if (top == NULL)
-    {
-        printf("栈空警告：获取栈顶元素失败 (Stack Underflow)\n");
         return 0;
-    }
-    *ptr_x = top->data;
+    *x = top->data;
     return 1;
 }
 
-int IsEmpty(Node *top)
+// 判断栈空
+int StackEmpty(LinkStack top)
 {
-    if (top == NULL)
-    {
-        return 1;
-    }
-    else
-    {
-        return 0;
-    }
+    return top == NULL;
 }
 
-void DestroyStack(Node **top)
-{
-    Node *p = *top;
-    Node *q;
-    while (p != NULL)
-    {
-        q = p;
-        p = p->next;
-        free(q);
-    }
-    *top = NULL;
-    printf("栈已销毁\n");
-}
-
+// 测试主函数
 int main()
 {
-    Node *top;
-    DataType x;
+    LinkStack S;
+    int x;
+    InitStack(&S);
 
-    InitStack(&top);
+    printf("入栈：1 2 3\n");
+    Push(&S, 1);
+    Push(&S, 2);
+    Push(&S, 3);
 
-    printf("栈初始化完成。\n");
+    if (GetTop(S, &x))
+        printf("栈顶元素：%d\n", x);
 
-    if (IsEmpty(top))
+    printf("出栈：");
+    while (Pop(&S, &x))
     {
-        printf("当前栈为空。\n");
+        printf("%d ", x);
     }
-    else
-    {
-        printf("当前栈不为空。\n");
-    }
+    printf("\n");
 
-    printf("\n尝试从空栈中获取栈顶元素：\n");
-    if (GetTop(top, &x))
-    {
-        printf("栈顶元素为: %c\n", x);
-    }
-
-    printf("\n尝试从空栈中弹出元素：\n");
-    if (Pop(&top, &x))
-    {
-        printf("弹出元素: %c\n", x);
-    }
-
-    printf("\n对 'A', 'B', 'C' 执行入栈操作。\n");
-    Push(&top, 'A');
-    Push(&top, 'B');
-    Push(&top, 'C');
-
-    if (IsEmpty(top))
-    {
-        printf("当前栈为空。\n");
-    }
-    else
-    {
-        printf("当前栈不为空。\n");
-    }
-
-    if (GetTop(top, &x))
-    {
-        printf("当前栈顶元素为: %c\n", x);
-    }
-
-    printf("\n执行一次出栈操作。\n");
-    if (Pop(&top, &x))
-    {
-        printf("弹出元素: %c\n", x);
-    }
-
-    if (GetTop(top, &x))
-    {
-        printf("当前栈顶元素为: %c\n", x);
-    }
-
-    printf("\n执行一次出栈操作。\n");
-    if (Pop(&top, &x))
-    {
-        printf("弹出元素: %c\n", x);
-    }
-
-    if (GetTop(top, &x))
-    {
-        printf("当前栈顶元素为: %c\n", x);
-    }
-
-    printf("\n请输入一个待插入栈的字符元素: ");
-    scanf(" %c", &x);
-    Push(&top, x);
-
-    if (GetTop(top, &x))
-    {
-        printf("当前栈顶元素为: %c\n", x);
-    }
-
-    printf("\n销毁栈...\n");
-    DestroyStack(&top);
-
-    if (IsEmpty(top))
-    {
-        printf("当前栈为空。\n");
-    }
-    else
-    {
-        printf("当前栈不为空。\n");
-    }
-
-    printf("\n尝试从已销毁的栈中获取栈顶元素：\n");
-    if (GetTop(top, &x))
-    {
-        printf("栈顶元素为: %c\n", x);
-    }
-
-    printf("\n尝试从已销毁的栈中弹出元素：\n");
-    if (Pop(&top, &x))
-    {
-        printf("弹出元素: %c\n", x);
-    }
-
+    if (StackEmpty(S))
+        printf("栈已空\n");
+    getchar();
     return 0;
 }
