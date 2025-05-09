@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef int DataType;
+typedef char DataType;
 
 typedef struct Node
 {
@@ -20,55 +20,66 @@ int main(void)
 {
     Node *top = NULL;
     DataType x;
-    int choice, running = 1;
+    int choice;
+    int running = 1;
 
     InitStack(&top);
-    printf("é“¾æ ˆåˆå§‹åŒ–å®Œæˆã€‚\n");
+    printf("Á´Õ»³õÊ¼»¯Íê³É¡£\n");
 
     while (running)
     {
-        printf("\n====== é“¾æ ˆæ“ä½œèœå• ======\n");
-        printf("1. å…¥æ ˆ\n");
-        printf("2. å‡ºæ ˆ\n");
-        printf("3. è·å–æ ˆé¡¶å…ƒç´ \n");
-        printf("4. åˆ¤æ–­æ ˆæ˜¯å¦ä¸ºç©º\n");
-        printf("5. é”€æ¯é“¾æ ˆ\n");
-        printf("0. é€€å‡ºç¨‹åº\n");
-        printf("=========================\n");
-        printf("è¯·è¾“å…¥æ“ä½œç¼–å·: ");
+        printf("\n====== Á´Õ»µÄÊµÏÖ ======\n");
+        printf("1. ÈëÕ»\n");
+        printf("2. ³öÕ»\n");
+        printf("3. »ñÈ¡Õ»¶¥ÔªËØ\n");
+        printf("4. ÅĞ¶ÏÕ»ÊÇ·ñÎª¿Õ\n");
+        printf("5. Ïú»ÙÁ´Õ»\n");
+        printf("0. ÍË³ö³ÌĞò\n");
+        printf("========================\n");
+        printf("ÇëÊäÈë²Ù×÷±àºÅ: ");
+
         if (scanf("%d", &choice) != 1)
         {
-            printf("è¾“å…¥æ— æ•ˆï¼Œè¯·è¾“å…¥æ•°å­—ã€‚\n");
+            printf("ÊäÈëÎŞĞ§£¬ÇëÊäÈëÊı×Ö¡£\n");
             while (getchar() != '\n')
                 ;
             continue;
         }
+
         switch (choice)
         {
         case 1:
-            printf("è¯·è¾“å…¥è¦å…¥æ ˆçš„æ•´æ•°: ");
-            while (scanf("%d", &x) != 1)
+            printf("ÇëÊäÈëÒªÈëÕ»µÄ×Ö·û: ");
+            while (scanf(" %c", &x) != 1)
             {
-                printf("è¾“å…¥æ— æ•ˆï¼Œè¯·è¾“å…¥ä¸€ä¸ªæ•´æ•°: ");
+                printf("ÊäÈëÎŞĞ§£¬ÇëÊäÈëÒ»¸ö×Ö·û: ");
                 while (getchar() != '\n')
                     ;
             }
             Push(&top, x);
-            printf("å…ƒç´  %d å·²å…¥æ ˆã€‚\n", x);
+            printf("ÔªËØ '%c' ÒÑÈëÕ»¡£\n", x);
             break;
         case 2:
             if (Pop(&top, &x))
-                printf("å‡ºæ ˆå…ƒç´ : %d\n", x);
+            {
+                printf("³öÕ»ÔªËØ: '%c'\n", x);
+            }
             break;
         case 3:
             if (GetTop(top, &x))
-                printf("å½“å‰æ ˆé¡¶å…ƒç´ ä¸º: %d\n", x);
+            {
+                printf("µ±Ç°Õ»¶¥ÔªËØÎª: '%c'\n", x);
+            }
             break;
         case 4:
             if (Empty(top))
-                printf("æ ˆä¸ºç©º\n");
+            {
+                printf("Õ»Îª¿Õ\n");
+            }
             else
-                printf("æ ˆéç©º\n");
+            {
+                printf("Õ»·Ç¿Õ\n");
+            }
             break;
         case 5:
             DestroyStack(&top);
@@ -76,10 +87,10 @@ int main(void)
         case 0:
             running = 0;
             DestroyStack(&top);
-            printf("ç¨‹åºå·²é€€å‡ºã€‚\n");
+            printf("³ÌĞòÒÑÍË³ö¡£\n");
             break;
         default:
-            printf("æ— æ•ˆçš„æ“ä½œç¼–å·ï¼Œè¯·é‡æ–°è¾“å…¥ã€‚\n");
+            printf("ÎŞĞ§µÄ²Ù×÷±àºÅ£¬ÇëÖØĞÂÊäÈë¡£\n");
         }
     }
 
@@ -101,8 +112,8 @@ void Push(Node **top, DataType x)
     Node *s = (Node *)malloc(sizeof(Node));
     if (s == NULL)
     {
-        printf("å†…å­˜åˆ†é…å¤±è´¥ï¼Œæ— æ³•å…¥æ ˆ\n");
-        exit(1);
+        printf("ÄÚ´æ·ÖÅäÊ§°Ü£¬ÎŞ·¨ÈëÕ»\n");
+        exit(EXIT_FAILURE);
     }
     s->data = x;
     s->next = *top;
@@ -113,7 +124,7 @@ int Pop(Node **top, DataType *ptr)
 {
     if (Empty(*top))
     {
-        printf("æ ˆä¸ºç©ºï¼ˆä¸‹æº¢ï¼‰ï¼Œåˆ é™¤å¤±è´¥\n");
+        printf("ÏÂÒç´íÎó,É¾³ıÊ§°Ü\n");
         return 0;
     }
     Node *p = *top;
@@ -128,7 +139,7 @@ int GetTop(Node *top, DataType *ptr)
 {
     if (Empty(top))
     {
-        printf("æ ˆä¸ºç©ºï¼ˆä¸‹æº¢ï¼‰ï¼Œè·å–æ ˆé¡¶å…ƒç´ å¤±è´¥\n");
+        printf("ÏÂÒç´íÎó,È¡Õ»¶¥Ê§°Ü\n");
         return 0;
     }
     *ptr = top->data;
@@ -139,6 +150,8 @@ void DestroyStack(Node **top)
 {
     Node *p = *top;
     Node *q;
+    int initiallyEmpty = (*top == NULL);
+
     while (p != NULL)
     {
         q = p->next;
@@ -146,5 +159,13 @@ void DestroyStack(Node **top)
         p = q;
     }
     *top = NULL;
-    printf("é“¾æ ˆå·²é”€æ¯\n");
+
+    if (!initiallyEmpty)
+    {
+        printf("Á´Õ»ÒÑÏú»Ù¡£\n");
+    }
+    else
+    {
+        printf("Õ»ÒÑÎª¿Õ»òÖ®Ç°ÒÑ±»Ïú»Ù¡£\n");
+    }
 }
