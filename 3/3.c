@@ -1,10 +1,7 @@
 #include <stdio.h>
-#include <stdlib.h> // For malloc, NULL, exit, EXIT_FAILURE
+#include <stdlib.h>
 
-// 定义二叉树节点的数据类型
 typedef char DataType;
-
-// 定义二叉树节点结构体
 typedef struct BiNode
 {
     DataType data;                  // 节点数据
@@ -15,11 +12,53 @@ typedef struct BiNode
 // 对于层序遍历，队列最多可能需要存储树中最宽一层的节点数
 #define MAX_QUEUE_SIZE 100
 
-// 函数声明
 BiNode *CreatBiTree();
 void PreOrder(BiNode *root);
-void LevelOrder(BiNode *root); // 新增层序遍历函数声明
+void InOrder(BiNode *root);
+void PostOrder(BiNode *root);
+void LevelOrder(BiNode *root); 
 void FreeBiTree(BiNode *root);
+
+// 主函数
+int main()
+{
+    BiNode *root = NULL; // 定义二叉树的根指针变量，并初始化为NULL
+
+    printf("按照前序遍历顺序输入二叉树节点数据 ('#'表示空节点):\n");
+    printf("例如: ABD##E##CF#G### (对于树 A(B(D,E),C(null,F(G))))\n");
+    printf("输入: ");
+    root = CreatBiTree(); // 调用函数建立一棵二叉树
+
+    if (root != NULL)
+    {
+        printf("\n该二叉树的根结点是: %c\n", root->data);
+
+        printf("\n该二叉树的前序遍历序列是: ");
+        PreOrder(root);
+        printf("\n");
+
+        printf("\n该二叉树的中序遍历序列是: ");
+        InOrder(root);
+        printf("\n");
+
+        printf("\n该二叉树的后序遍历序列是: ");
+        PostOrder(root);
+        printf("\n");
+
+        printf("\n该二叉树的层序遍历序列是: ");
+        LevelOrder(root);
+        printf("\n");
+    }
+    else
+    {
+        printf("创建的二叉树为空。\n");
+    }
+
+    FreeBiTree(root); // 释放二叉树占用的内存
+    root = NULL;      // 将root置为NULL，避免悬挂指针
+
+    return 0;
+}
 
 /**
  * @brief 根据前序遍历序列创建二叉树
@@ -70,6 +109,42 @@ void PreOrder(BiNode *root)
         printf("%c ", root->data); // 访问并打印根节点的数据域
         PreOrder(root->lchild);    // 前序递归遍历左子树
         PreOrder(root->rchild);    // 前序递归遍历右子树
+    }
+}
+
+/**
+ * @brief 中序遍历二叉树并打印节点数据
+ * @param root BiNode* 要遍历的二叉树的根节点
+ */
+void InOrder(BiNode *root)
+{
+    if (root == NULL)
+    {
+        return; // 递归调用的结束条件：如果节点为空，则返回
+    }
+    else
+    {
+        InOrder(root->lchild); // 中序递归遍历左子树
+        printf("%c ", root->data); // 访问并打印根节点的数据域
+        InOrder(root->rchild); // 中序递归遍历右子树
+    }
+}
+
+/**
+ * @brief 后序遍历二叉树并打印节点数据
+ * @param root BiNode* 要遍历的二叉树的根节点
+ */
+void PostOrder(BiNode *root)
+{
+    if(root == NULL)
+    {
+        return;
+    }
+    else
+    {
+        PostOrder(root->lchild);
+        PostOrder(root->rchild);
+        printf("%c ", root->data); // 访问并打印根节点的数据域
     }
 }
 
@@ -148,37 +223,4 @@ void FreeBiTree(BiNode *root)
     FreeBiTree(root->lchild); // 递归释放左子树
     FreeBiTree(root->rchild); // 递归释放右子树
     free(root);               // 释放当前节点
-}
-
-// 主函数
-int main()
-{
-    BiNode *root = NULL; // 定义二叉树的根指针变量，并初始化为NULL
-
-    printf("请按照前序遍历顺序输入二叉树节点数据 ('#'表示空节点):\n");
-    printf("例如: ABD##E##CF#G### (对于树 A(B(D,E),C(null,F(G))))\n");
-    printf("输入: ");
-    root = CreatBiTree(); // 调用函数建立一棵二叉树
-
-    if (root != NULL)
-    {
-        printf("\n该二叉树的根结点是: %c\n", root->data);
-
-        printf("\n该二叉树的前序遍历序列是: ");
-        PreOrder(root);
-        printf("\n");
-
-        printf("\n该二叉树的层序遍历序列是: ");
-        LevelOrder(root);
-        printf("\n");
-    }
-    else
-    {
-        printf("创建的二叉树为空。\n");
-    }
-
-    FreeBiTree(root); // 释放二叉树占用的内存
-    root = NULL;      // 将root置为NULL，避免悬挂指针
-
-    return 0;
 }

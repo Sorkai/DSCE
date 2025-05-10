@@ -2,7 +2,6 @@
 #include <stdlib.h>
 
 typedef char DataType;
-
 typedef struct BiNode
 {
     DataType data;
@@ -13,15 +12,56 @@ typedef struct BiNode
 
 BiNode *CreatBiTree();
 void PreOrder(BiNode *root);
-void LevelOrder(BiNode *root);
+void InOrder(BiNode *root);
+void PostOrder(BiNode *root);
 void FreeBiTree(BiNode *root);
+
+int main()
+{
+    BiNode *root = NULL;
+
+    printf("°´ÕÕÇ°Ğò±éÀúË³ĞòÊäÈë¶ş²æÊ÷½ÚµãÊı¾İ ('#'±íÊ¾¿Õ½Úµã):\n");
+    // ABCD####E#FGH####
+    // ABD##E##CF#G###
+    // ABD###CEG###F##
+    printf("ÊäÈë: ");
+    root = CreatBiTree();
+
+    if (root != NULL)
+    {
+        printf("\n¸Ã¶ş²æÊ÷µÄ¸ù½áµãÊÇ: %c\n", root->data);
+
+        printf("\n¸Ã¶ş²æÊ÷µÄÇ°Ğò±éÀúĞòÁĞÊÇ: ");
+        PreOrder(root);
+        printf("\n");
+
+        printf("\n¸Ã¶ş²æÊ÷µÄÖĞĞò±éÀúĞòÁĞÊÇ: ");
+        InOrder(root);
+        printf("\n");
+
+        printf("\n¸Ã¶ş²æÊ÷µÄºóĞò±éÀúĞòÁĞÊÇ: ");
+        PostOrder(root);
+        printf("\n");
+    }
+    else
+    {
+        printf("´´½¨µÄ¶ş²æÊ÷Îª¿Õ¡£\n");
+    }
+
+    FreeBiTree(root);
+    root = NULL;
+    getchar();
+    getchar();
+
+    return 0;
+}
 
 BiNode *CreatBiTree()
 {
     char ch;
     if (scanf(" %c", &ch) != 1)
     {
-        fprintf(stderr, "è¾“å…¥é”™è¯¯ï¼\n");
+        fprintf(stderr, "ÊäÈë´íÎó£¡\n");
         return NULL;
     }
 
@@ -34,7 +74,7 @@ BiNode *CreatBiTree()
         BiNode *root = (BiNode *)malloc(sizeof(BiNode));
         if (root == NULL)
         {
-            fprintf(stderr, "å†…å­˜åˆ†é…å¤±è´¥ï¼\n");
+            fprintf(stderr, "ÄÚ´æ·ÖÅäÊ§°Ü£¡\n");
             exit(EXIT_FAILURE);
         }
         root->data = ch;
@@ -58,56 +98,31 @@ void PreOrder(BiNode *root)
     }
 }
 
-void LevelOrder(BiNode *root)
+void InOrder(BiNode *root)
 {
     if (root == NULL)
     {
-        printf("æ ‘ä¸ºç©ºï¼Œæ— æ³•è¿›è¡Œå±‚åºéå†ã€‚\n");
         return;
-    }
-
-    BiNode *queue[MAX_QUEUE_SIZE];
-    int front = 0;
-    int rear = 0;
-
-    if (rear < MAX_QUEUE_SIZE)
-    {
-        queue[rear++] = root;
     }
     else
     {
-        fprintf(stderr, "é˜Ÿåˆ—å·²æ»¡ï¼Œæ— æ³•å°†æ ¹èŠ‚ç‚¹å…¥é˜Ÿã€‚\n");
+        InOrder(root->lchild);
+        printf("%c ", root->data);
+        InOrder(root->rchild);
+    }
+}
+
+void PostOrder(BiNode *root)
+{
+    if (root == NULL)
+    {
         return;
     }
-
-    while (front != rear)
+    else
     {
-        BiNode *currentNode = queue[front++];
-        printf("%c ", currentNode->data);
-
-        if (currentNode->lchild != NULL)
-        {
-            if (rear < MAX_QUEUE_SIZE)
-            {
-                queue[rear++] = currentNode->lchild;
-            }
-            else
-            {
-                fprintf(stderr, "é˜Ÿåˆ—å·²æ»¡ï¼Œæ— æ³•å°†å·¦å­©å­å…¥é˜Ÿ (èŠ‚ç‚¹æ•°æ®: %c)ã€‚\n", currentNode->lchild->data);
-            }
-        }
-
-        if (currentNode->rchild != NULL)
-        {
-            if (rear < MAX_QUEUE_SIZE)
-            {
-                queue[rear++] = currentNode->rchild;
-            }
-            else
-            {
-                fprintf(stderr, "é˜Ÿåˆ—å·²æ»¡ï¼Œæ— æ³•å°†å³å­©å­å…¥é˜Ÿ (èŠ‚ç‚¹æ•°æ®: %c)ã€‚\n", currentNode->rchild->data);
-            }
-        }
+        PostOrder(root->lchild);
+        PostOrder(root->rchild);
+        printf("%c ", root->data);
     }
 }
 
@@ -120,36 +135,4 @@ void FreeBiTree(BiNode *root)
     FreeBiTree(root->lchild);
     FreeBiTree(root->rchild);
     free(root);
-}
-
-int main()
-{
-    BiNode *root = NULL;
-
-    printf("è¯·æŒ‰ç…§å‰åºéå†é¡ºåºè¾“å…¥äºŒå‰æ ‘èŠ‚ç‚¹æ•°æ® ('#'è¡¨ç¤ºç©ºèŠ‚ç‚¹):\n");
-    printf("ä¾‹å¦‚: ABD##E##CF#G### (å¯¹äºæ ‘ A(B(D,E),C(null,F(G))))\n");
-    printf("è¾“å…¥: ");
-    root = CreatBiTree();
-
-    if (root != NULL)
-    {
-        printf("\nè¯¥äºŒå‰æ ‘çš„æ ¹ç»“ç‚¹æ˜¯: %c\n", root->data);
-
-        printf("\nè¯¥äºŒå‰æ ‘çš„å‰åºéå†åºåˆ—æ˜¯: ");
-        PreOrder(root);
-        printf("\n");
-
-        printf("\nè¯¥äºŒå‰æ ‘çš„å±‚åºéå†åºåˆ—æ˜¯: ");
-        LevelOrder(root);
-        printf("\n");
-    }
-    else
-    {
-        printf("åˆ›å»ºçš„äºŒå‰æ ‘ä¸ºç©ºã€‚\n");
-    }
-
-    FreeBiTree(root);
-    root = NULL;
-
-    return 0;
 }
