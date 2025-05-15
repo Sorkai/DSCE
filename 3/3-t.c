@@ -16,7 +16,7 @@ void InOrder(BiNode *root);
 void PostOrder(BiNode *root);
 void FreeBiTree(BiNode *root);
 
-int main()
+int main(void)
 {
     BiNode *root = NULL;
 
